@@ -1,51 +1,13 @@
-import http from "http";
-import url, { URLSearchParams } from "url";
-import greeting from "./modules/greeting.js";
-import process from "process";
+import express from 'express';
+import modelRouter from './routers/model.js';
 
-const hostname = "127.0.0.1";
-const port = 3000;
 
-global.name = "Олег";
+const app = express();
 
-console.log(greeting());
+const PUBLIC_DIR = 'public';
+app.use(express.static(PUBLIC_DIR));
 
-process.on("exit", (code) => {
-  console.log("Process exit with code: ", code);
-});
+app.use('/model', modelRouter);
 
-const server = http.createServer((req, res) => {
-  const queryObject = url.parse(req.url, true).query;
-  res.statusCode = 200;
-
-  res.setHeader("Content-Type", "application/json");
-
-  const a = Number(queryObject["a"]);
-  const b = Number(queryObject["b"]);
-
-  if (!a || !b) {
-    res.statusCode = 400;
-
-    const error = {
-      status: res.statusCode,
-      message: "could not parse two numbers: a, b",
-    };
-
-    res.end(JSON.stringify(error, null, 4));
-    return;
-  }
-
-  const json = {
-    name: global.name,
-    add: a + b,
-    sub: a - b,
-    div: a / b,
-    mul: a * b,
-  };
-
-  res.end(JSON.stringify(json, null, 4));
-});
-
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Server started at port ${port}`));
