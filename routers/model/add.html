@@ -9,10 +9,10 @@
     <title>Новая модель</title>
   </head>
   <body>
-    <form>
+    <form class="form-control" method="post" enctype="multipart/form-data">
       <div class="form-group">
         <label for="name">Название</label>
-        <input type="text" class="form-control" id="name" placeholder="Введите имя"/>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Введите имя" required/>
       </div>
       <div class="form-group">
         <label for="description">Описание</label>
@@ -20,12 +20,12 @@
       </div>
       <div class="form-group">
         <label for="photo">Изображение модели</label>
-        <input type="file" class="form-control-file" id="photo" name="photo" />
+        <input type="file" class="form-control-file" id="photo" name="photo" required/>
       </div>
 
       <div class="form-group">
         <label for="model_file">Файл 3Д-модели</label>
-        <input type="file" class="form-control-file" id="model_file" name="model_file" />
+        <input type="file" class="form-control-file" id="model_file" name="model"/>
       </div>
       
       <button type="submit" class="btn btn-primary">Добавить модель</button>
